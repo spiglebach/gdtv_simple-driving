@@ -1,6 +1,5 @@
-using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class Car : MonoBehaviour {
     [SerializeField] private float initialSpeed = 10f;
@@ -34,5 +33,11 @@ public class Car : MonoBehaviour {
 
     public void Steer(int value) {
         steerValue = value;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Obstacle")) {
+            SceneManager.LoadScene(0);
+        }
     }
 }
