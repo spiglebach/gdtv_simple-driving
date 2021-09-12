@@ -456,7 +456,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Play
+  m_Text: Play (9)
 --- !u!222 &962547013
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -495,6 +495,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highScoreText: {fileID: 770508351}
+  energyText: {fileID: 962547012}
+  maxEnergy: 3
+  energyRechargeDurationInMinutes: 1
 --- !u!4 &1074420148
 Transform:
   m_ObjectHideFlags: 0
@@ -521,7 +524,6 @@ GameObject:
   - component: {fileID: 1461999952}
   - component: {fileID: 1461999951}
   - component: {fileID: 1461999950}
-  - component: {fileID: 1461999953}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -593,8 +595,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1461999953}
-        m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
+      - m_Target: {fileID: 1074420147}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: LoadLevel1
         m_Mode: 1
         m_Arguments:
@@ -643,18 +645,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461999948}
   m_CullTransparentMesh: 1
---- !u!114 &1461999953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1461999948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ecb59a8335f1ed45b965a94a97a9905, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2088767700
 GameObject:
   m_ObjectHideFlags: 0
