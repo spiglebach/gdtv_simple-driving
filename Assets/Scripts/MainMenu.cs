@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour {
     [SerializeField] private Text highScoreText;
     [SerializeField] private Text energyText;
+    [SerializeField] private Button playButton;
     [SerializeField] private int maxEnergy = 5;
     [SerializeField] private int energyRechargeDurationInMinutes = 1;
     [SerializeField] private AndroidNotificationHandler androidNotificationHandler;
@@ -14,13 +15,21 @@ public class MainMenu : MonoBehaviour {
     
     private const string EnergyKey = "Energy";
     private const string EnergyReadyKey = "EnergyReady";
-    
-    void Start() {
+
+    private void Start() {
+        OnApplicationFocus(true);
+    }
+
+    private void OnApplicationFocus(bool hasFocus) {
+        if (!hasFocus) return;
+        CancelInvoke();
+
         var highScore = PlayerPrefs.GetInt(ScoreSystem.HighScore, 0);
         highScoreText.text = $"High score: {highScore.ToString()}";
 
         energy = PlayerPrefs.GetInt(EnergyKey, maxEnergy);
         if (energy <= 0) {
+            playButton.interactable = false;
             var energyReadyString = PlayerPrefs.GetString(EnergyReadyKey, string.Empty);
             if (energyReadyString == string.Empty) return;
 
@@ -29,12 +38,19 @@ public class MainMenu : MonoBehaviour {
             androidNotificationHandler.ScheduleNotification(energyReady);
 #endif
             if (DateTime.Now > energyReady) {
-                energy = maxEnergy;
-                PlayerPrefs.SetInt(EnergyKey, energy);
-                PlayerPrefs.Save();
+                EnergyRecharged();
+            } else {
+                Invoke(nameof(EnergyRecharged), (energyReady - DateTime.Now).Seconds);
             }
         }
+        energyText.text = $"Play ({energy.ToString()})";
+    }
 
+    private void EnergyRecharged() {
+        playButton.interactable = true;
+        energy = maxEnergy;
+        PlayerPrefs.SetInt(EnergyKey, energy);
+        PlayerPrefs.Save();
         energyText.text = $"Play ({energy.ToString()})";
     }
     
